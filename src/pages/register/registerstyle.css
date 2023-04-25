@@ -1,0 +1,67 @@
+h1{
+    margin: 0px;
+}
+
+.register-form{
+    display: flex;
+    justify-content: center;
+    /* background-image: linear-gradient(90deg, #ffffff 0%, #a0e1ff 35%, #2e6bc7 100%); */
+    /* height: 100vh; */
+}
+
+.reg-card{
+    padding:40px;
+    margin:50px;
+    /* height:50vh; */
+    width: 70%;
+    background-color: #ffffff;
+    /* padding:50px; */
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* margin:auto; */
+    /* padding-top: 10px; */
+    /* padding-inline:150px; */
+    /* margin-top: 30px; */
+    /* margin-bottom: 40px; */
+    /* width: 70%; */
+    box-shadow: rgba(145, 145, 145, 0.35) 0px 5px 15px;
+}
+
+.reg-heading{
+    margin-bottom: 12px;
+    color: #0048ffe6;
+    margin-top: 0px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    /* border-bottom-inline: 1px solid #0048ffe6; */
+    /* border-bottom-right-radius: 20px; */
+    
+}
+
+.country-select{
+    margin-top: 15px;
+    padding: 10px;
+
+}
+.note{
+    color: red;
+    display: flex;
+    justify-content: center;
+    margin:0px;
+    margin-top: 20px;
+    padding:0px;
+}
+
+.login-card{
+    width: 43%;
+    /* margin-bottom: ; */
+}
+
+.login-form{
+    padding-bottom: 18.7vh;
+    background-image: none;
+    /* padding-top:10vh; */
+}

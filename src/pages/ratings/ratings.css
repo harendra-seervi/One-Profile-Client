@@ -1,0 +1,9 @@
+.rating-dashboard{
+    /* display: flex;
+    justify-content: center; */
+    text-align: center;
+}
+.rating-heading{
+    padding: 15px;
+    color: #0048ffe6;
+}
