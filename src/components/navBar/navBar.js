@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import css from './navBarStyle.css'
-import { useNavigate } from 'react-router-dom';
+import { json, useNavigate } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import LeaderboardRoundedIcon from '@mui/icons-material/LeaderboardRounded';
 import NotificationsActiveRoundedIcon from '@mui/icons-material/NotificationsActiveRounded';
@@ -19,7 +19,7 @@ function NavBar() {
     //If we refersh the page then we will agin be at same page only
 
     setActClass(localStorage.getItem("currentPage"));
-  })
+  },[])
 
   const [open, setOpen] = React.useState(false);
 
@@ -79,12 +79,24 @@ function NavBar() {
       navigate("/messaging");
     }
     else if (val == 8) {
+      //logout
       localStorage.clear();
       localStorage.setItem("currentPage", 1);
       setActClass(1);
       setOpenDialog(false);
       navigate("/");
     }
+    else if (val == 9) {
+      setActClass(9);
+      console.log("fasdfs");
+      navigate(`/profile/${getUserOpname()}`)
+    }
+  }
+
+  function getUserOpname() {
+    let item = localStorage.getItem("user")
+    item = JSON.parse(item);
+    return item[0].opusername;
   }
   return (
     <div className='nav-bar'>
@@ -105,7 +117,10 @@ function NavBar() {
         {
           !localStorage.getItem("user") ? <div onClick={() => { setActiveNavbar(6) }} className={`Nav-tag ${actClass == 6 ? "active" : null}`}><li className='login-register'>Register</li></div>
             : <div className={`Nav-tag ${actClass == 8 ? "active" : null}`} >
-              <div onClick={handleClickOpen} className={`Nav-tag ${actClass == 8 ? "active" : null}`}><li className='login-register'>Logout</li></div>
+              <div className='logout-username'>
+                <div onClick={() => { setActiveNavbar(9) }} className={`Nav-tag ${actClass == 9 ? "active" : null}`}><li className='login-register'>{getUserOpname()}</li></div>
+                <div onClick={handleClickOpen} className={`Nav-tag ${actClass == 8 ? "active" : null}`}><li className='login-register'>Logout</li></div>
+              </div>
               {openDialog ? <Dialog
                 open={open}
                 onClose={handleClose}

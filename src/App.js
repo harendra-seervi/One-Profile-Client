@@ -8,6 +8,7 @@ import Problemset from './pages/problemset/problemset';
 import Login from './pages/login/login';
 import Register from './pages/register/register';
 import Messaging from './pages/Messaging/messaging';
+import Profile from './pages/profile/profile';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/login" element={<Login></Login>}></Route>
           <Route path="/register" element={<Register></Register>}></Route>
           <Route path="/messaging" element={<Messaging></Messaging>}></Route>
+          <Route path="/profile/:username" element={<Profile></Profile>}></Route>
         </Routes>
       </BrowserRouter>
     </div>

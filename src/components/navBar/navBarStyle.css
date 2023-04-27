@@ -65,3 +65,8 @@
 .login-register{
     font-size: 15px;
 }
+
+.logout-username{
+    display: flex;
+    flex-direction: row;
+}

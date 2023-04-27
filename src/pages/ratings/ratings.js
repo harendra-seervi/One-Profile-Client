@@ -9,7 +9,8 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import './ratings.css'
 import { TableSortLabel } from '@mui/material';
-const columns = [  { id: 'rank', label: 'Rank', minWidth: 170, },  { id: 'name', label: 'Name', minWidth: 100 },  {    id: 'country',    label: 'Country',    minWidth: 170,    align: 'right',    format: (value) => value.toLocaleString('en-US'),  },  {    id: 'rating',    label: 'OP Rating',    minWidth: 170,    align: 'right',    format: (value) => value.toLocaleString('en-US'),  sort: true }, ];
+import { Navigate, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+const columns = [  { id: 'rank', label: 'Rank', minWidth: 170,sort:true },  { id: 'name', label: 'Name', minWidth: 100 },  {    id: 'country',    label: 'Country',    minWidth: 170,    align: 'right',    format: (value) => value.toLocaleString('en-US'),  },  {    id: 'rating',    label: 'OP Rating',    minWidth: 170,    align: 'right',    format: (value) => value.toLocaleString('en-US'),  sort: true }, ];
 
 function Ratings() {
   const [rows, setRows] = useState([]);
@@ -57,7 +58,10 @@ function Ratings() {
     setPage(0);
   };
 
-
+const navigate=useNavigate();
+function test(val){
+  navigate(`/profile/${val}`);
+}
   return (
     <div className="rating-dashboard">
       <h1 className="rating-heading">Leader Board</h1>
@@ -93,12 +97,12 @@ function Ratings() {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => {
                   return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                  <TableRow className='row-table' onClick={()=>test(row.opusername)} hover role="checkbox" tabIndex={-1} key={row.code}>
                     {
                       columns.map((column) => {
                         // setRankCt(rankCt+1)
                       const value = row[column.id];
-                      console.log("Column id ",row[column.id]);
+                      // console.log("Column id ",row[column.id]);
                       return (
                         <TableCell key={column.id} align={column.align} >
                           {column.format && typeof value === 'number'
@@ -106,7 +110,9 @@ function Ratings() {
                             : value}
                         </TableCell>
                       );
-                    })}
+                    })
+                    
+                    }
                   </TableRow>
                 );
               })}
