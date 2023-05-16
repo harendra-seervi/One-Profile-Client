@@ -1,13 +1,14 @@
 /* Page */
 .profile-div-backgound-page{
-    padding-top:15px; 
+    /* padding-top:15px; 
     padding-left:45px;
     padding-right:45px;
-    
+     */
 }
 
 .profile-page-card{
-    box-shadow: 0 14px 28px rgba(116, 116, 116, 0.25), 0 10px 10px rgba(205, 205, 205, 0.22);
+    box-shadow: 0 14px 28px rgba(42, 42, 42, 0.25), 0 10px 10px rgba(205, 205, 205, 0.22);
+    margin:20px;
 }
 
 

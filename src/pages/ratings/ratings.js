@@ -10,6 +10,7 @@ import TableRow from '@mui/material/TableRow';
 import './ratings.css'
 import { TableSortLabel } from '@mui/material';
 import { Navigate, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { green } from '@mui/material/colors';
 const columns = [  { id: 'rank', label: 'Rank', minWidth: 170,sort:true },  { id: 'name', label: 'Name', minWidth: 100 },  {    id: 'country',    label: 'Country',    minWidth: 170,    align: 'right',    format: (value) => value.toLocaleString('en-US'),  },  {    id: 'rating',    label: 'OP Rating',    minWidth: 170,    align: 'right',    format: (value) => value.toLocaleString('en-US'),  sort: true }, ];
 
 function Ratings() {
@@ -62,37 +63,39 @@ const navigate=useNavigate();
 function test(val){
   navigate(`/profile/${val}`);
 }
+
   return (
     <div className="rating-dashboard">
       <h1 className="rating-heading">Leader Board</h1>
-      <Paper sx={{margin:'auto', width: '95%', overflow: 'hidden' }} elevation={0}>
-        <TableContainer sx={{ maxHeight: 440 }}>
-          <Table stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableRow>
+
+      <Paper sx={{margin:'auto', width: '96%', overflow: 'hidden' }} elevation={3}>
+        <TableContainer  sx={{ maxHeight: 440 }}>
+          <Table  stickyHeader aria-label="sticky table">
+            <TableHead sx={{ }} >
+              <TableRow >
                 {columns.map((column) => (
                   <TableCell
                     key={column.id}
                     align={column.align}
                     style={{ minWidth: column.minWidth }}
                     sortDirection={sortColumn === column.id ? sortDirection : false}
-                  >
+                    >
                     {column.sort ? (
                       <TableSortLabel
-                        active={sortColumn === column.id}
-                        direction={sortColumn === column.id ? sortDirection : 'asc'}
-                        onClick={() => handleSort(column.id)}
+                      active={sortColumn === column.id}
+                      direction={sortColumn === column.id ? sortDirection : 'asc'}
+                      onClick={() => handleSort(column.id)}
                       >
                         {column.label}
                       </TableSortLabel>
                     ) : (
                       column.label
-                    )}
+                      )}
                   </TableCell>
                 ))}
               </TableRow>
             </TableHead>
-            <TableBody>
+            <TableBody >
               {rows
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => {
@@ -104,7 +107,7 @@ function test(val){
                       const value = row[column.id];
                       // console.log("Column id ",row[column.id]);
                       return (
-                        <TableCell key={column.id} align={column.align} >
+                        <TableCell  key={column.id} align={column.align} >
                           {column.format && typeof value === 'number'
                             ? column.format(value)
                             : value}

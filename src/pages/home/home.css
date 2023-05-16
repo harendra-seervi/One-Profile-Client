@@ -1,0 +1,23 @@
+.home-card{
+    /* background-color: yellow; */
+    display: flex;
+    margin-top: 10px;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    background-color: rgb(251, 253, 255);
+    /* padding:40;? */
+}
+
+.card-outline{
+    margin:10px;
+    margin:auto;
+    margin-top: 18px;
+}
+
+.add-blog {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    z-index: 999;
+  }

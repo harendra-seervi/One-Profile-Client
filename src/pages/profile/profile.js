@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './profile.css'
 import { useParams } from 'react-router-dom';
 import Chart from "react-apexcharts";
-import CalHeatmap from 'cal-heatmap';
+import { Heatmap } from "contribution-heatmap"
 function Profile() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -81,7 +81,7 @@ function Profile() {
                     ['CodeChef'],
                     ['AtCoder'],
                     ['HackerRank'],
-                    ['Spoj'],
+                    ['OneProfile'],
                 ],
                 labels: {
                     style: {
@@ -146,12 +146,12 @@ function Profile() {
                 max: 100
             })
         },
-        
+
         ],
         options: {
             chart: {
                 height: 500,
-                width:200,
+                width: 200,
                 type: 'heatmap',
             },
             dataLabels: {
@@ -219,7 +219,7 @@ function Profile() {
                 <div className='heighest-rating-component'>
                     <h1 className='higherst-rating-heading'>Highest Ratings</h1>
                     <div id='chart'>
-                        <Chart options={progress.options} series={progress.series} type="bar" height={379} />
+                        <Chart options={progress.options} series={progress.series} type="bar"  />
                     </div>
                 </div>
             </div>
@@ -237,7 +237,9 @@ function Profile() {
                 </div>
             </div>
             <div className='heatmap-componet'>
-                <Chart options={heatData.options} series={heatData.series} type="heatmap" width={700} height={200} />
+                <h1 className='higherst-rating-heading'>HeatMap</h1>
+                <Heatmap />
+                <Heatmap />
             </div>
         </div>
     </div>

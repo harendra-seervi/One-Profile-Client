@@ -9,4 +9,9 @@
 }
 .row-table{
     cursor: pointer;
+    /* background-color: yellow; */
+}
+
+.row-table:hover{
+    background-color: blue;
 }
