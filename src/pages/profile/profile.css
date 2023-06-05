@@ -14,11 +14,11 @@
 
 /* Profile Card */
 .flag{
-    width: 20px;
+    width: 25px;
     height: 20px;
     margin:5px;
     padding-top: 74px;
-    padding-left: 10px;
+    padding-left: 8px;
     display: flex;
 }
 
@@ -71,7 +71,8 @@
     top: 0px;
     margin: 10px;
     padding-top: 67px;
-    margin-left: 0px;
+    margin-left: 2px;
+    color: rgb(69, 69, 69);
 }
 
 
