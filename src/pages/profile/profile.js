@@ -14,7 +14,7 @@ function Profile() {
   const [at, setATHandle] = useState("");
   const [hr, setHRHandle] = useState("");
   const [sp, setSPHandle] = useState("");
-  let opRating=0;
+  let opRating = 0;
   const [lineGraphData, setLineGraphData] = useState({
     options: {
       chart: {
@@ -62,7 +62,7 @@ function Profile() {
         height: 350,
         type: 'bar',
         events: {
-          click: function (chart, w, e) {}
+          click: function (chart, w, e) { }
         }
       },
       plotOptions: {
@@ -164,15 +164,15 @@ function Profile() {
 
   const params = useParams();
   const { username } = params;
-  
+
   const [isLoading, setIsLoading] = useState(true);
-  
+
   useEffect(() => {
     setIsLoading(false);
     getUserData(username);
     setIsLoading(true);
   }, [username]);
-  const [OP,setOP]=useState("Loading...");
+  const [OP, setOP] = useState("Loading...");
   async function getUserData(userName) {
     let userInfo = await fetch(`http://localhost:5000/profile/${userName}`);
     userInfo = await userInfo.json();
@@ -186,18 +186,18 @@ function Profile() {
     setATHandle(userInfo.at);
     setHRHandle(userInfo.hr);
     setSPHandle(userInfo.sp);
-    let opfinal=Math.max(userInfo.cfrating,Number(userInfo.ccrating)-612,Number(userInfo.atrating)+222,Number(userInfo.sprating)-317);
-    if(opfinal<=300) opfinal=0;
+    let opfinal = Math.max(userInfo.cfrating, Number(userInfo.ccrating) - 612, Number(userInfo.atrating) + 222, Number(userInfo.sprating) - 317);
+    if (opfinal <= 300) opfinal = 0;
     setProgress({
       series: [{
-        data: [userInfo.cfrating, userInfo.ccrating,userInfo.atrating, userInfo.sprating, opfinal]
+        data: [userInfo.cfrating, userInfo.ccrating, userInfo.atrating, userInfo.sprating, opfinal]
       }],
       options: {
         chart: {
           height: 350,
           type: 'bar',
           events: {
-            click: function (chart, w, e) {}
+            click: function (chart, w, e) { }
           }
         },
         plotOptions: {
@@ -228,11 +228,15 @@ function Profile() {
         }
       },
     });
-    opRating=opfinal;
+    opRating = opfinal;
     setOP(opRating);
 
   }
-  
+  let cfLink = "https://codeforces.com/profile/" + cf;
+  let ccLink = "https://www.codechef.com/users/" + cc;
+  let atLink = "https://atcoder.jp/users/" + at;
+  let lcLink = "https://leetcode.com/" + sp;
+  // const [cfProfileLink,setcfLink]=useState
   return (
     <div className='profile-div-backgound-page'>
       <div className='profile-page-card'>
@@ -254,12 +258,19 @@ function Profile() {
             <div className='user-profile-info'>
               <h4 className='about'>OP Rating : {OP} </h4>
 
-              {OP>=1200 && OP<=1400? <h4 className='rating-color about'> (Pupil)</h4>
-              : OP<1200 ? <h4 style={{color:'gray'}} className='rating-color about'> (Newbie)</h4>:
-              OP>=1400 ?<h4 style={{color:'#23cdd3'}} className='rating-color about'> (Spacialist)</h4>:null}
+              {OP >= 1200 && OP <= 1400 ? <h4 className='rating-color about'> (Pupil)</h4>
+                : OP < 1200 ? <h4 style={{ color: 'gray' }} className='rating-color about'> (Newbie)</h4> :
+                  OP >= 1400 ? <h4 style={{ color: '#23cdd3' }} className='rating-color about'> (Spacialist)</h4> : null}
             </div>
             <div className='user-profile-info'>
-              <h4 className='about'>OP Rank : 2 </h4>
+
+              <h4 className='about'>
+                Platforms Link :
+                <a  style={{textDecoration:'none'}}href={cfLink} target="_blank">[Codeforces]</a>
+                <a style={{textDecoration:'none'}} href={ccLink} target="_blank"> [CodeChef]</a>
+                <a  style={{textDecoration:'none'}}href={atLink} target="_blank"> [AtCoder]</a>
+                <a  style={{textDecoration:'none'}}href={lcLink} target="_blank"> [LeetCode] </a>
+              </h4>
             </div>
             <div className='user-profile-info'>
               <h4 className='about'>E-mail : {email}</h4>
@@ -293,8 +304,8 @@ function Profile() {
           <h1 className='higherst-rating-heading'>HeatMap</h1>
           {isLoading ? (
             <>
-              <Heatmap />
-              <Heatmap />
+              {/* <Heatmap />
+              <Heatmap /> */}
             </>
           ) : (
             <div>Loading...</div>

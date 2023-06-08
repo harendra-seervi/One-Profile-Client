@@ -22,7 +22,7 @@ function Login() {
             result=await result.json();
             // console.log(result);
             if(result.auth){
-                localStorage.setItem('user',JSON.stringify(result.user));
+                localStorage.setItem('username',JSON.stringify(result.username));
                 localStorage.setItem('token',JSON.stringify(result.auth));
                 localStorage.setItem("currentPage",1);
                 navigate('/');

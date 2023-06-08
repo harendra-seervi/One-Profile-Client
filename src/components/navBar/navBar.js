@@ -17,9 +17,8 @@ function NavBar() {
   const [openDialog, setOpenDialog] = useState(false);
   useEffect(() => {
     //If we refersh the page then we will agin be at same page only
-
     setActClass(localStorage.getItem("currentPage"));
-  },[])
+  },)
 
   const [open, setOpen] = React.useState(false);
 
@@ -94,9 +93,10 @@ function NavBar() {
   }
 
   function getUserOpname() {
-    let item = localStorage.getItem("user")
+    let item = localStorage.getItem("username")
     item = JSON.parse(item);
-    return item[0].opusername;
+    
+    return item;
   }
   return (
     <div className='nav-bar'>
@@ -111,11 +111,11 @@ function NavBar() {
 
       <ul className='unordered-list'>
         {
-          !localStorage.getItem("user") ? <div onClick={() => { setActiveNavbar(5) }} className={`Nav-tag Nav-button ${actClass == 5 ? "active" : null}`}><li className='login-register'>Login</li></div>
+          !localStorage.getItem("token") ? <div onClick={() => { setActiveNavbar(5) }} className={`Nav-tag Nav-button ${actClass == 5 ? "active" : null}`}><li className='login-register'>Login</li></div>
             : null
         }
         {
-          !localStorage.getItem("user") ? <div onClick={() => { setActiveNavbar(6) }} className={`Nav-tag ${actClass == 6 ? "active" : null}`}><li className='login-register'>Register</li></div>
+          !localStorage.getItem("token") ? <div onClick={() => { setActiveNavbar(6) }} className={`Nav-tag ${actClass == 6 ? "active" : null}`}><li className='login-register'>Register</li></div>
             : <div className={`Nav-tag ${actClass == 8 ? "active" : null}`} >
               <div className='logout-username'>
                 <div onClick={() => { setActiveNavbar(9) }} className={`Nav-tag ${actClass == 9 ? "active" : null}`}><li className='login-register'>{getUserOpname()}</li></div>
