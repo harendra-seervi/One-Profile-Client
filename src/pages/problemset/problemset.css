@@ -1,0 +1,18 @@
+
+.MuiDataGrid-root .MuiDataGrid-columnHeader {
+    background-color: rgb(244, 244, 244); 
+    color: black; 
+    width: 100%;
+    outline: none !important;
+}
+
+.MuiDataGrid-cell:focus {
+    outline: none !important;
+}
+
+.tableupper{
+    background-color: #f4f4f4e7;
+}
+.problemset-dashboard{
+    background-color: black;
+}

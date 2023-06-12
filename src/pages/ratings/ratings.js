@@ -192,7 +192,7 @@ function Ratings() {
                   <TableCell></TableCell>
                   <TableCell></TableCell>
                   <TableCell>
-                    <Box sx={{ display: 'flex' }}>
+                    <Box sx={{ display: 'flex',justifyContent:'center' }}>
                       <CircularProgress />
                     </Box>
                   </TableCell>

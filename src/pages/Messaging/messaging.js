@@ -16,7 +16,8 @@ function Messaging() {
         localStorage.setItem("currentPage", 1);
     }
     async function fetchMessages() {
-        const token = localStorage.getItem("token");
+        let token = localStorage.getItem("token");
+        token = token.substr(1,token.length-2); 
         if (!token) {
             LogOutAndNavigateToHome();
             return;
