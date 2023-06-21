@@ -86,7 +86,7 @@ function HomePage() {
 
     async function getAllPost() {
         setBlogLoading(true);
-        let posts = await fetch("http://localhost:5000/blog", {
+        let posts = await fetch("https://one-profile-server-git-production-harendra-seervi.vercel.app/blog", {
             method: 'GET'
         });
         posts = await posts.json();
@@ -134,7 +134,7 @@ function HomePage() {
             console.log(data);
             let token = localStorage.getItem('token');
             token = token.substr(1, token.length - 2);
-            const response = await fetch('http://localhost:5000/blog', {
+            const response = await fetch('https://one-profile-server-git-production-harendra-seervi.vercel.app/blog', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -234,7 +234,7 @@ function HomePage() {
     async function handleLike(blogId) {
         let token = localStorage.getItem('token');
         token = token.substr(1, token.length - 2);
-        let finalCount = await fetch("http://localhost:5000/blog/like", {
+        let finalCount = await fetch("https://one-profile-server-git-production-harendra-seervi.vercel.app/blog/like", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

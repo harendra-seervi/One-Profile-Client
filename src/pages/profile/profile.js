@@ -174,7 +174,7 @@ function Profile() {
   }, [username]);
   const [OP, setOP] = useState("Loading...");
   async function getUserData(userName) {
-    let userInfo = await fetch(`http://localhost:5000/profile/${userName}`);
+    let userInfo = await fetch(`https://one-profile-server-git-production-harendra-seervi.vercel.app/profile/${userName}`);
     userInfo = await userInfo.json();
     userInfo = userInfo[0];
     setName(userInfo.name);

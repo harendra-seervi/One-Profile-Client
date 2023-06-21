@@ -12,7 +12,7 @@ function Login() {
     async function submit_login() {
         if (email != "" && password != "") {
             setErr(false);
-            let result=await fetch("http://localhost:5000/login",{
+            let result=await fetch("https://one-profile-server-git-production-harendra-seervi.vercel.app/login",{
                 method:'post', 
                 body:JSON.stringify({email,password}),
                 headers:{

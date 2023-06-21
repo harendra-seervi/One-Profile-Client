@@ -22,7 +22,7 @@ function Messaging() {
             LogOutAndNavigateToHome();
             return;
         }
-        let result = await fetch('http://localhost:5000/messaging', {
+        let result = await fetch('https://one-profile-server-git-production-harendra-seervi.vercel.app/messaging', {
             method: 'post',
             headers: {
                 Authorization: `Bearer ${token}`
