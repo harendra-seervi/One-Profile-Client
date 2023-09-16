@@ -39,7 +39,7 @@ function Ratings() {
 
   async function showRatings() {
     setLoading(false);
-    let result = await fetch('http://localhost:5000/ratings');
+    let result = await fetch('https://oneprofileop.onrender.com/ratings');
     setLoading(true);
     result = await result.json();
     setLUpdate(result[0].lastupdate);

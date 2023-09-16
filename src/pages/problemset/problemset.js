@@ -29,7 +29,7 @@ function ProblemSet() {
 
     async function getAllProblems() {
         setIsLoading(false);
-        let response = await fetch("http://localhost:5000/problemset/", {
+        let response = await fetch("https://oneprofileop.onrender.com/problemset/", {
             method: 'GET'
         });
 
@@ -64,7 +64,7 @@ function ProblemSet() {
         let str = localStorage.getItem('username');
         const userName = str.substring(1, str.length - 1);
 
-        let respo = await fetch("http://localhost:5000/problemset/changestatus", {
+        let respo = await fetch("https://oneprofileop.onrender.com/problemset/changestatus", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

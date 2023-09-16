@@ -64,7 +64,7 @@ function Register() {
     async function submit() {
         //Form Validation
         //checking userExist or not with op username
-        let findUser = await fetch(`http://localhost:5000/register/${opusername}`);
+        let findUser = await fetch(`https://oneprofileop.onrender.com/register/${opusername}`);
         if (name.length == 0 || email.length == 0) {
             setIsValidNameEmail(false);
         }
@@ -88,7 +88,7 @@ function Register() {
                 setPassMatch(true);
                 setPassMatch(true);
                 // Valid form , Here we going to enter data into Database:- 
-                let result = await fetch('http://localhost:5000/register', {
+                let result = await fetch('https://oneprofileop.onrender.com/register', {
                     method: 'post',
                     body: JSON.stringify({ name, opusername, email, password, country, cf, cc, sp, at, hr }),
                     headers: {
