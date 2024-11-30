@@ -22,7 +22,7 @@ function Messaging() {
             LogOutAndNavigateToHome();
             return;
         }
-        let result = await fetch('https://oneprofileop.onrender.com/messaging', {
+        let result = await fetch('http://localhost:5000/messaging', {
             method: 'post',
             headers: {
                 Authorization: `Bearer ${token}`

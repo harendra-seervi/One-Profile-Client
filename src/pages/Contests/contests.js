@@ -98,7 +98,6 @@ function Ratings() {
   }
 
   const handleSearch = (event) => {
-
     setSearchText(event.target.value);
   };
 

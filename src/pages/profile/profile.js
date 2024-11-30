@@ -174,7 +174,7 @@ function Profile() {
   }, [username]);
   const [OP, setOP] = useState("Loading...");
   async function getUserData(userName) {
-    let userInfo = await fetch(`https://oneprofileop.onrender.com/profile/${userName}`);
+    let userInfo = await fetch(`http://localhost:5000/profile/${userName}`);
     userInfo = await userInfo.json();
     userInfo = userInfo[0];
     setName(userInfo.name);

@@ -87,7 +87,7 @@ function HomePage() {
 
     async function getAllPost() {
         setBlogLoading(true);
-        let posts = await fetch("https://oneprofileop.onrender.com/blog", {
+        let posts = await fetch("http://localhost:5000/blog", {
             method: 'GET'
         });
         posts = await posts.json();
@@ -95,6 +95,7 @@ function HomePage() {
         setBlogLoading(false);
         setAllBlog(posts);
     }
+
     React.useEffect(() => {
         getAllPost();
     }, [])
@@ -131,11 +132,9 @@ function HomePage() {
                 description: explanation,
                 files: selectedImage
             };
-
-            console.log(data);
             let token = localStorage.getItem('token');
             token = token.substr(1, token.length - 2);
-            const response = await fetch('https://oneprofileop.onrender.com/blog', {
+            const response = await fetch('http://localhost:5000/blog', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -235,7 +234,7 @@ function HomePage() {
     async function handleLike(blogId) {
         let token = localStorage.getItem('token');
         token = token.substr(1, token.length - 2);
-        let finalCount = await fetch("https://oneprofileop.onrender.com/blog/like", {
+        let finalCount = await fetch("http://localhost:5000/blog/like", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
