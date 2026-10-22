@@ -1,19 +1,337 @@
-.rating-dashboard{
-    /* display: flex;
-    justify-content: center; */
-    text-align: center;
-}
-.rating-heading{
-    padding: 15px;
-    color: #0048ffe6;
-    display: flex;
-    flex-direction: row;
-}
-.row-table{
-    cursor: pointer;
-    /* background-color: yellow; */
+.rating-dashboard {
+    padding: 30px 40px 36px;
+    width: 100%;
+    background:
+        radial-gradient(circle at top left, rgba(251, 191, 36, 0.12), transparent 28%),
+        linear-gradient(180deg, rgba(7, 12, 22, 1), rgba(12, 18, 31, 1));
+    min-height: calc(100vh - 84px);
+    box-sizing: border-box;
 }
 
-.row-table:hover{
-    background-color: blue;
+.rating-content-wrapper {
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.rating-header-row {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 20px;
+  padding: 22px 24px;
+  border: 1px solid rgba(251, 191, 36, 0.14);
+  border-radius: 26px;
+  background: linear-gradient(135deg, rgba(18, 23, 38, 0.96), rgba(24, 34, 52, 0.94));
+  box-shadow: 0 24px 48px rgba(15, 23, 42, 0.26);
+  overflow: visible;
+}
+
+.rating-header-row::before {
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  right: -50px;
+  top: -90px;
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.18), rgba(251, 191, 36, 0));
+  pointer-events: none;
+}
+
+.rating-title-wrap {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.section-kicker {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: #fbbf24;
+  text-transform: uppercase;
+}
+
+.rating-heading {
+  margin: 0;
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: -0.08em;
+  color: #fbbf24;
+}
+
+.rating-controls {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 18px;
+  background: rgba(10, 16, 28, 0.5);
+  border: 1px solid rgba(251, 191, 36, 0.12);
+  overflow: visible;
+}
+
+.rating-controls .MuiFormControl-root {
+  min-width: 190px;
+}
+
+.rating-controls .MuiOutlinedInput-root {
+  border-radius: 14px;
+  background: rgba(14, 20, 30, 0.9);
+}
+
+.rating-controls .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(251, 191, 36, 0.22) !important;
+}
+
+.rating-controls .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(167, 139, 250, 0.8) !important;
+}
+
+.rating-controls .Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(167, 139, 250, 0.9) !important;
+  border-width: 1.5px !important;
+  box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.12);
+}
+
+.rating-controls .MuiInputBase-input {
+  color: #f8fafc !important;
+}
+
+.rating-controls .MuiInputLabel-root {
+  color: #f9d977;
+}
+
+.secondary-button {
+  min-height: 42px;
+  border-radius: 14px !important;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b) !important;
+  color: #111827 !important;
+  border: none !important;
+  box-shadow: 0 12px 24px rgba(251, 191, 36, 0.22) !important;
+  font-weight: 800 !important;
+  text-transform: none !important;
+  padding-inline: 18px !important;
+}
+
+.clear-button {
+  min-height: 42px;
+  border-radius: 14px !important;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b) !important;
+  color: #111827 !important;
+  border: none !important;
+  box-shadow: 0 12px 24px rgba(251, 191, 36, 0.22) !important;
+  font-weight: 800 !important;
+  text-transform: none !important;
+  padding-inline: 18px !important;
+}
+
+.toggle-update-button {
+  min-height: 38px !important;
+  border-radius: 12px !important;
+  background: rgba(251, 191, 36, 0.06) !important;
+  border: 1px solid rgba(251, 191, 36, 0.16) !important;
+  color: #fef3c7 !important;
+  font-weight: 700 !important;
+  text-transform: none !important;
+  padding: 0 14px !important;
+  box-shadow: none !important;
+}
+
+.MuiAlert-standardInfo {
+  background: rgba(251, 191, 36, 0.08) !important;
+  color: #e2e8f0 !important;
+  border: 1px solid rgba(251, 191, 36, 0.18);
+}
+
+.soft-alert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: 18px;
+  background: rgba(251, 191, 36, 0.08);
+  border: 1px solid rgba(251, 191, 36, 0.16);
+  color: #e9f2ff;
+  font-size: 0.94rem;
+  margin-bottom: 18px;
+}
+
+.stat-card {
+  position: relative;
+  overflow: hidden;
+  padding: 18px 20px;
+  border-radius: 22px;
+  border: 1px solid rgba(251, 191, 36, 0.12);
+  background: linear-gradient(135deg, rgba(17, 24, 39, 0.9), rgba(31, 41, 55, 0.85));
+  box-shadow: 0 16px 30px rgba(15, 23, 42, 0.18);
+}
+
+.stat-card:nth-child(1) {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.12), rgba(17, 24, 39, 0.9));
+}
+
+.stat-card:nth-child(2) {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.08), rgba(17, 24, 39, 0.9));
+}
+
+.stat-card:nth-child(3) {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(17, 24, 39, 0.9));
+}
+
+.stat-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #f7d98b;
+  font-weight: 800;
+}
+
+.stat-card strong {
+  display: block;
+  margin-top: 8px;
+  color: #f8fafc;
+  font-size: clamp(1.5rem, 2vw, 2rem);
+  font-weight: 800;
+}
+
+.table-shell {
+  background: rgba(16, 22, 35, 0.96);
+  border: 1px solid rgba(251, 191, 36, 0.1);
+  border-radius: 24px;
+  box-shadow: 0 24px 55px rgba(2, 6, 23, 0.22);
+  overflow: hidden;
+}
+
+.table-shell,
+.table-shell .MuiTableContainer-root,
+.table-shell .MuiTable-root,
+.table-shell .MuiTableBody-root,
+.table-shell .MuiTableRow-root,
+.table-shell .MuiTableCell-root {
+  background: #0f172a !important;
+  color: #edf3ff !important;
+}
+
+.table-shell .MuiTableRow-root {
+  background: transparent !important;
+}
+
+.table-shell .MuiTableCell-root {
+  background-color: transparent !important;
+}
+
+.table-shell .MuiTableRow-root:nth-of-type(odd) {
+  background: rgba(148, 163, 184, 0.03) !important;
+}
+
+.table-shell .MuiTableRow-root:hover {
+  background: rgba(251, 191, 36, 0.06) !important;
+}
+
+.MuiTableHead-root .MuiTableCell-root {
+  background: linear-gradient(180deg, rgba(18, 24, 38, 1), rgba(24, 33, 49, 0.95)) !important;
+  color: #fbbf24 !important;
+  font-weight: 800 !important;
+  border-bottom: 1px solid rgba(251,191,36,0.12) !important;
+}
+
+.MuiTableCell-root {
+  border-bottom: 1px solid rgba(148,163,184,0.12) !important;
+  color: #edf3ff !important;
+}
+
+.MuiTableSortLabel-root {
+  color: inherit !important;
+  font-weight: 800 !important;
+}
+
+.MuiTableSortLabel-icon {
+  color: #fcd34d !important;
+}
+
+.MuiTablePagination-root {
+  background: rgba(13, 19, 31, 0.96);
+  color: #e2e8f0 !important;
+  border-top: 1px solid rgba(251,191,36,0.08);
+}
+
+.MuiTablePagination-select,
+.MuiTablePagination-actions .MuiIconButton-root {
+  color: #e2e8f0 !important;
+}
+
+.country-picker-wrap {
+  position: relative;
+  z-index: 20;
+}
+
+.country-select__menu {
+  z-index: 9999 !important;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+  box-shadow: 0 20px 35px rgba(2, 6, 23, 0.4) !important;
+}
+
+.country-select__menu-list {
+  background: #111827 !important;
+  padding: 6px !important;
+}
+
+.country-select__option {
+  border-radius: 10px !important;
+}
+
+.country-select__option--is-focused {
+  background: rgba(251, 191, 36, 0.12) !important;
+  color: #fff7d6 !important;
+}
+
+.country-select__option--is-selected {
+  background: rgba(251, 191, 36, 0.2) !important;
+  color: #fff7d6 !important;
+}
+
+@media (max-width: 900px) {
+  .rating-header-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .rating-controls {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .rating-dashboard {
+    padding: 18px 12px 24px;
+  }
+
+  .rating-header-row {
+    padding: 18px 16px;
+    border-radius: 20px;
+  }
+
+  .rating-controls {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .rating-controls .MuiFormControl-root {
+    min-width: 100%;
+  }
+
+  .stats-row {
+    grid-template-columns: 1fr;
+  }
 }

@@ -4,11 +4,16 @@ import Select from 'react-select'
 import countryList from 'react-select-country-list'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import * as React from 'react';
+
+// API base URL — use localhost during development
+const API_BASE = process.env.NODE_ENV === 'production'
+    ? 'https://one-profile-server.vercel.app'
+    : 'http://localhost:5000';
 
 function Register() {
     const [value, setValue] = useState('');
@@ -19,145 +24,238 @@ function Register() {
     const [cPassword, setCPassword] = useState("");
     const [opusername, setUserName] = useState("");
     const [country, setCountry] = useState("");
-    const [cf, setCfHandle] = useState("");
-    const [cc, setCCHandle] = useState("");
-    const [at, setATHandle] = useState("");
-    const [hr, setHRHandle] = useState("");
-    const [sp, setSPHandle] = useState("");
+    const [codeforces, setCodeforcesHandle] = useState("");
+    const [codechef, setCodechefHandle] = useState("");
+    const [atcoder, setAtcoderHandle] = useState("");
+    const [leetcode, setLeetcodeHandle] = useState("");
     const [isValidNameEmail, setIsValidNameEmail] = useState(true);
     const [isExist, setIsExist] = useState(false);
     const [passMatch, setPassMatch] = useState(true);
     const navigate = useNavigate();
-    const [isLogin, setIsLogin] = useState(false);
-    
+    const [open, setOpen] = React.useState(false);
+
     const Alert = React.forwardRef(function Alert(props, ref) {
         return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
     });
-    
-    const [open, setOpen] = React.useState(false);
 
-    const handleClick = () => {
-        setOpen(true);
-    };
-
+    const handleClick = () => setOpen(true);
     const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-
+        if (reason === 'clickaway') return;
         setOpen(false);
     };
+
     const changeHandler = value => {
-        //country select option
-        setValue(value)
+        setValue(value);
         setCountry(value.label);
     }
+
     useEffect(() => {
         if (localStorage.getItem("user")) {
             localStorage.setItem("currentPage", 1);
             navigate("/");
         }
-    })
-    
-    
-    
+    }, [navigate]);
+
     async function submit() {
-        //Form Validation
-        //checking userExist or not with op username
-        let findUser = await fetch(`https://one-profile-server.vercel.app/register/${opusername}`);
-        if (name.length == 0 || email.length == 0) {
-            setIsValidNameEmail(false);
-        }
-        else if ((password != cPassword) || password.length == 0) {
-            setIsValidNameEmail(true);
-            setIsExist(false);
-            setPassMatch(false);
-        }
-        else if (opusername.length == 0) {
-            setIsValidNameEmail(true);
-            setIsExist(true);
-            setPassMatch(true);
-        }
-        else if (opusername.length > 0) {
-            findUser = await findUser.json();
-            if (!findUser) {
-                setIsExist(true);
+        try {
+            if (name.length === 0 || email.length === 0) {
+                setIsValidNameEmail(false);
+                return;
             }
-            else {
+            if ((password !== cPassword) || password.length === 0) {
+                setIsValidNameEmail(true);
                 setIsExist(false);
+                setPassMatch(false);
+                return;
+            }
+            if (opusername.length === 0) {
+                setIsValidNameEmail(true);
+                setIsExist(true);
                 setPassMatch(true);
-                setPassMatch(true);
-                // Valid form , Here we going to enter data into Database:- 
-                let result = await fetch('https://one-profile-server.vercel.app/register', {
-                    method: 'post',
-                    body: JSON.stringify({ name, opusername, email, password, country, cf, cc, sp, at, hr }),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                })
-                result = await result.json();
+                return;
+            }
+
+            const availabilityResponse = await fetch(`${API_BASE}/api/auth/check-username/${opusername}`);
+            const availabilityData = await availabilityResponse.json();
+
+            if (!availabilityData.available) {
+                setIsExist(true);
+                return;
+            }
+
+            setIsExist(false);
+            setPassMatch(true);
+
+            const result = await fetch(`${API_BASE}/api/auth/register`, {
+                method: 'POST',
+                body: JSON.stringify({ 
+                    name, 
+                    opusername, 
+                    email, 
+                    password, 
+                    country, 
+                    codeforces, 
+                    codechef, 
+                    leetcode, 
+                    atcoder 
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const resultData = await result.json();
+
+            if (resultData.success) {
                 localStorage.setItem("currentPage", 5);
-                // localStorage.setItem("user",JSON.stringify(result));
                 handleClick();
                 setTimeout(() => {
                     navigate("/login");
-                    
                 }, 2000);
+            } else {
+                setIsValidNameEmail(false);
             }
+        } catch (error) {
+            console.error('Registration error:', error);
+            setIsValidNameEmail(false);
         }
     }
-    
-    
+
     return (
         <div className="register-form">
-            <div className="reg-card">
+            <div className="auth-card">
+                <div className="auth-brand">
+                    <span className="auth-badge">OneProfile</span>
+                    <h2>Build your coding identity.</h2>
+                    <p>
+                        Track your competitive programming ratings across Codeforces, CodeChef, LeetCode,
+                        and AtCoder in one polished profile.</p>
 
-                <h1 className="reg-heading">Register</h1>
+                    <div className="auth-features">
+                        <div className="auth-feature">
+                            <span className="auth-feature-dot" />
+                            One dashboard for all platforms
+                        </div>
+                        <div className="auth-feature">
+                            <span className="auth-feature-dot" />
+                            Live rating tracking and ranking
+                        </div>
+                        <div className="auth-feature">
+                            <span className="auth-feature-dot" />
+                            Share your profile with confidence
+                        </div>
+                    </div>
+                </div>
 
-                <TextField onChange={(e) => { setName(e.target.value) }} style={{ margin: "15px", marginTop: "0px" }} label="Full Name*" variant="standard" />
+                <div className="auth-form-panel">
+                    <div className="auth-header">
+                        <span className="auth-eyebrow">Welcome</span>
+                        <h1 className="reg-heading">Create account</h1>
+                        <p className="auth-subtitle">Set up your profile and start tracking your ratings.</p>
+                    </div>
 
-                <TextField onChange={(e) => { setEmail(e.target.value) }} style={{ margin: "15px" }} label="E-mail*" variant="standard" type="email" />
+                    <div className="auth-fields">
+                        <div className="auth-row">
+                            <TextField
+                                className="auth-field"
+                                onChange={(e) => setName(e.target.value)}
+                                label="Full Name*"
+                                variant="outlined"
+                            />
+                            <TextField
+                                className="auth-field"
+                                onChange={(e) => setEmail(e.target.value)}
+                                label="E-mail*"
+                                variant="outlined"
+                                type="email"
+                            />
+                        </div>
 
-                <TextField onChange={(e) => { setPassword(e.target.value) }} style={{ margin: "15px" }} label="Password*" variant="standard" type="password" />
+                        <div className="auth-row">
+                            <TextField
+                                className="auth-field"
+                                onChange={(e) => setPassword(e.target.value)}
+                                label="Password*"
+                                variant="outlined"
+                                type="password"
+                            />
+                            <TextField
+                                className="auth-field"
+                                onChange={(e) => setCPassword(e.target.value)}
+                                label="Confirm Password*"
+                                variant="outlined"
+                                type="password"
+                            />
+                        </div>
 
-                <TextField onChange={(e) => { setCPassword(e.target.value) }} style={{ margin: "15px" }} label="Confirm Password*" variant="standard" type="password" />
+                        <TextField
+                            className="auth-field"
+                            onChange={(e) => setUserName(e.target.value)}
+                            label="OneProfile Username*"
+                            variant="outlined"
+                        />
 
-                <TextField onChange={(e) => { setUserName(e.target.value) }} style={{ margin: "15px" }} label="One Profile Username (Unique)*" variant="standard" />
+                        <Select
+                            placeholder="Select Country"
+                            className="country-select"
+                            options={options}
+                            value={value}
+                            onChange={changeHandler}
+                        />
 
-                <Select placeholder="Select Country" className="country-select" options={options} value={value} onChange={changeHandler} />
+                        <div className="auth-row">
+                            <TextField
+                                className="auth-field"
+                                onChange={(e) => setCodeforcesHandle(e.target.value)}
+                                label="CodeForces Handle"
+                                variant="outlined"
+                            />
+                            <TextField
+                                className="auth-field"
+                                onChange={(e) => setCodechefHandle(e.target.value)}
+                                label="CodeChef Handle"
+                                variant="outlined"
+                            />
+                        </div>
 
-                <TextField onChange={(e) => { setCfHandle(e.target.value) }} style={{ margin: "15px" }} label="CodeForces Handle" variant="standard" />
+                        <div className="auth-row">
+                            <TextField
+                                className="auth-field"
+                                onChange={(e) => setLeetcodeHandle(e.target.value)}
+                                label="LeetCode Handle"
+                                variant="outlined"
+                            />
+                            <TextField
+                                className="auth-field"
+                                onChange={(e) => setAtcoderHandle(e.target.value)}
+                                label="AtCoder Handle"
+                                variant="outlined"
+                            />
+                        </div>
 
-                <TextField onChange={(e) => { setCCHandle(e.target.value) }} style={{ margin: "15px" }} label="CodeChef Handle" variant="standard" />
+                        <Stack spacing={2} sx={{ width: '100%' }}>
+                            <Button onClick={submit} className="auth-submit" variant="contained">
+                                Sign up
+                            </Button>
 
-                <TextField onChange={(e) => { setSPHandle(e.target.value) }} style={{ margin: "15px" }} label="Spoj Handle" variant="standard" />
+                            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                                <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                                    Registration successful! Redirecting to login...
+                                </Alert>
+                            </Snackbar>
+                        </Stack>
 
-                <TextField onChange={(e) => { setATHandle(e.target.value) }} style={{ margin: "15px" }} label="AtCoder Handle" variant="standard" />
+                        {!isValidNameEmail && <p className="note">* Please check your name or email</p>}
+                        {isExist && <p className="note">* Username is invalid or already exists</p>}
+                        {!passMatch && <p className="note">* Password does not match or is empty</p>}
 
-                <TextField onChange={(e) => { setHRHandle(e.target.value) }} style={{ margin: "15px" }} label="HackerRank Handle" variant="standard" />
-
-                <Stack spacing={2} sx={{ width: '100%' }}>
-                    <Button onClick={submit} style={{ marginTop: "30px", width: "95%", left: "15px" }} variant="contained" >
-                        SignUp
-                    </Button>
-                   
-                    <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-                            Register success! Enter same E-mail and password to login
-                        </Alert>
-                    </Snackbar>
-                </Stack>
-                {
-                    !isValidNameEmail ? <p className="note">* Please check Name or E-mail</p> : null
-                }
-                {
-                    isExist ? <p className="note">* Incorrect OPusername OR OPusername already exist please provide diffrent username</p> : null
-                }
-                {
-                    !passMatch ? <p className="note">*Incorrect Password OR Password is not matched</p> : null
-                }
+                        <div className="auth-footer">
+                            Already have an account? <Link to="/login">Log in</Link>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );
 }
+
 export default Register;

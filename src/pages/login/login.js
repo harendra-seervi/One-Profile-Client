@@ -1,55 +1,134 @@
 import { useState } from 'react'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { Navigate, useNavigate } from 'react-router-dom';
-// css is same as we did in register so here we will not update any css
+import { Link, useNavigate } from 'react-router-dom';
+import '../register/registerstyle.css';
+
+// API base URL — use same pattern as home
+const API_BASE = process.env.NODE_ENV === 'production'
+    ? 'https://one-profile-server.vercel.app'
+    : 'http://localhost:5000';
+
+const featureHighlights = [
+    'Multi-platform Ratings on Single Page',
+    'OneProfile Aggregated Rating',
+    'Upcoming Contests',
+    'User Comparator',
+    'AI Problem Recommendation',
+    'AI CP Roadmap (30/60/90 Days)',
+    'AI Contest Coach',
+    'AI Performance Analysis',
+    'AI “Why Am I Stuck?”',
+    'Achievements & Skill Badges',
+    'Rating & Progress Analytics',
+    'Skill / Problem Heatmap',
+    'Global CP Skill Map',
+    'Find Your CP Twin',
+    'Mentor Match',
+];
 
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [err, setErr] = useState("");
+    const [err, setErr] = useState(false);
     const navigate = useNavigate();
+
     async function submit_login() {
-        if (email != "" && password != "") {
+        if (email !== "" && password !== "") {
             setErr(false);
-            let result=await fetch("https://one-profile-server.vercel.app/login",{
-                method:'post', 
-                body:JSON.stringify({email,password}),
-                headers:{
-                    'Content-Type':'application/json'
+            try {
+                let result = await fetch(`${API_BASE}/api/auth/login`, {
+                    method: 'POST', 
+                    body: JSON.stringify({ email, password }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                result = await result.json();
+                if (result.success && result.data) {
+                    localStorage.setItem('username', JSON.stringify(result.data.opusername));
+                    localStorage.setItem('token', JSON.stringify(result.data.token || 'logged-in'));
+                    localStorage.setItem("currentPage", 1);
+                    navigate('/');
+                } else {
+                    setErr(true);
                 }
-            })
-            result=await result.json();
-            // console.log(result);
-            if(result.auth){
-                localStorage.setItem('username',JSON.stringify(result.username));
-                localStorage.setItem('token',JSON.stringify(result.auth));
-                localStorage.setItem("currentPage",1);
-                navigate('/');
-            }
-            else{
+            } catch (error) {
+                console.error('Login error:', error);
                 setErr(true);
             }
-        }
-        else {
+        } else {
             setErr(true);
         }
     }
+
     return (
         <div className="register-form login-form">
-            <div className="reg-card login-card">
+            <div className="auth-card login-card">
+                <div className="auth-brand">
+                    <span className="auth-badge">Welcome back</span>
+                    <h2>Track smarter.</h2>
+                    <p>
+                        View your coding performance, compare ratings, and keep your competitive programming profile updated.
+                    </p>
 
-                <h1 className="reg-heading">Login</h1>
+                    <div className="auth-features">
+                        <div className="auth-feature">
+                            <span className="auth-feature-dot" />
+                            Central profile dashboard
+                        </div>
+                        <div className="auth-feature">
+                            <span className="auth-feature-dot" />
+                            Multi-platform ratings
+                        </div>
+                        <div className="auth-feature">
+                            <span className="auth-feature-dot" />
+                            AI-powered CP growth
+                        </div>
+                    </div>
 
-                <TextField onChange={(data) => { setEmail(data.target.value) }} style={{ margin: "15px", marginTop: "0px" }} label="E-mail*" variant="standard" type="email" />
+                    <div className="feature-grid">
+                        {featureHighlights.map((item) => (
+                            <span key={item} className="feature-pill">{item}</span>
+                        ))}
+                    </div>
+                </div>
 
-                <TextField onChange={(data) => { setPassword(data.target.value) }} style={{ margin: "15px" }} label="Password*" variant="standard" type="password" />
+                <div className="auth-form-panel">
+                    <div className="auth-header">
+                        <span className="auth-eyebrow">Sign in</span>
+                        <h1 className="reg-heading">Login</h1>
+                        <p className="auth-subtitle">Use your account details to continue.</p>
+                    </div>
 
-                <Button onClick={submit_login} style={{ marginTop: "30px", width: "95%", left: "15px" }} variant="contained">Login</Button>
-                {
-                    err ? <p className='note'>Please enter correct E-mail and Password</p>
-                        : null
-                }
+                    <div className="auth-fields">
+                        <TextField
+                            className="auth-field"
+                            onChange={(data) => setEmail(data.target.value)}
+                            label="E-mail*"
+                            variant="outlined"
+                            type="email"
+                        />
+
+                        <TextField
+                            className="auth-field"
+                            onChange={(data) => setPassword(data.target.value)}
+                            label="Password*"
+                            variant="outlined"
+                            type="password"
+                        />
+
+                        <Button onClick={submit_login} className="auth-submit" variant="contained">
+                            Login
+                        </Button>
+
+                        {err && <p className='note'>Please enter a valid email and password</p>}
+
+                        <div className="auth-footer">
+                            New here? <Link to="/register">Create account</Link>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );
